@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.jungle.myrecyclerview.adapter.MyAdapter;
+import com.example.jungle.myrecyclerview.utils.OnRecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,22 @@ public class MainActivity extends Activity {
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
         mRecyclerView.setAdapter(myAdapter);
+
+        //实现RecyclerView的item事件方法一
         myAdapter.setOnClickItem(new MyAdapter.OnClickItem() {
             @Override
             public void ClickItem(String title) {
+                Bundle mBundle = new Bundle();
+                Intent mIntent = new Intent();
+                mIntent.setClass(MainActivity.this, SecondActivity.class);
+                mIntent.putExtras(mBundle);
+                startActivity(mIntent);
+            }
+        });
+        //实现RecyclerView的item事件方法二
+        mRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(mRecyclerView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
                 Bundle mBundle = new Bundle();
                 Intent mIntent = new Intent();
                 mIntent.setClass(MainActivity.this, SecondActivity.class);
